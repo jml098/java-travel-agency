@@ -40,17 +40,17 @@ public class Vacation {
         this.end = validateEnd(end);
     }
 
-    public String validateDestination(String destination) {
+    private String validateDestination(String destination) {
         if (!(destination == null || destination.isBlank())) return destination;
         else throw new RuntimeException("Destination cannot be empty!");
     }
 
-    public LocalDate validateStart(LocalDate start) {
+    private LocalDate validateStart(LocalDate start) {
         if (!(start == null || start.isBefore(LocalDate.now()))) return start;
         else throw new RuntimeException("Start date cannot be in the past or null.");
     }
 
-    public LocalDate validateEnd(LocalDate end) {
+    private LocalDate validateEnd(LocalDate end) {
         if (!(end == null || end.isBefore(this.start))) return end;
         else throw new RuntimeException("End date cannot be before start date or null.");
     }
