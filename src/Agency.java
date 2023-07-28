@@ -7,36 +7,34 @@ public class Agency {
         Prompt prompt = new Prompt(new Scanner(System.in));
 
         System.out.println("Welcome to Generation Holidays");
-        while (prompt.ask("Do you want to book a vacation? (Y/N)").equalsIgnoreCase("Y")) {
-            Vacation vacation = new Vacation();
+        while (prompt.ask("Do you want to book a vacation? (Y/N) ").equalsIgnoreCase("Y")) {
+            Vacation vacation = null;
 
-            while (vacation.getDestination() == null) {
-                try {
-                    String destination = prompt.ask("Choose a destination: ");
-                    vacation.setDestination(destination);
-                } catch (RuntimeException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
+            while (vacation == null) {
+                String destination;
+                LocalDate start = null;
+                LocalDate end = null;
 
-            while (vacation.getStart() == null) {
-                try {
-                    LocalDate start = LocalDate.parse(prompt.ask("Insert start date (YYYY-MM-DD): "));
-                    vacation.setStart(start);
-                } catch (DateTimeParseException dateTimeParseException) {
-                    System.out.println("Invalid date format!");
-                } catch (RuntimeException e) {
-                    System.out.println(e.getMessage());
+                destination = prompt.ask("Choose a destination: ");
+
+                while (start == null) {
+                    try {
+                        start = LocalDate.parse(prompt.ask("Insert start date (YYYY-MM-DD): "));
+                    } catch (DateTimeParseException dateTimeParseException) {
+                        System.out.println("Invalid date format!");
+                    }
                 }
 
-            }
+                while (end == null) {
+                    try {
+                        end = LocalDate.parse(prompt.ask("Insert end date (YYYY-MM-DD): "));
+                    } catch (DateTimeParseException dateTimeParseException) {
+                        System.out.println("Invalid date format!");
+                    }
+                }
 
-            while (vacation.getEnd() == null) {
                 try {
-                    LocalDate end = LocalDate.parse(prompt.ask("Insert end date (YYYY-MM-DD): "));
-                    vacation.setEnd(end);
-                } catch (DateTimeParseException dateTimeParseException) {
-                    System.out.println("Invalid date format!");
+                    vacation = new Vacation(destination, start, end);
                 } catch (RuntimeException e) {
                     System.out.println(e.getMessage());
                 }
